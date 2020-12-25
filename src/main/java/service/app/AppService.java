@@ -25,26 +25,26 @@ public class AppService {
 
     public SendMessage startMsg() {
         return new SendMessage()
-                .setText("Добро пожаловать")
+                .setText("Welcome")
                 .setReplyMarkup(keyboardService.startKeyboard());
     }
 
     public EditMessageText selectCurrency() {
         return new EditMessageText()
-                .setText("Выберите валюту")
+                .setText("Select currency")
                 .setReplyMarkup(keyboardService.currenciesKeyboard());
     }
 
     public EditMessageText menu() {
         return new EditMessageText()
-                .setText("Главное меню")
+                .setText("Main menu")
                 .setReplyMarkup(keyboardService.startKeyboard());
     }
 
     public EditMessageText afterSelectingCurrency(User user, String currency) {
         user.setCurrencyTo(CurrencyType.getInstance(currency));
         return new EditMessageText()
-                .setText("Теперь вы можете конвертировать")
+                .setText("You can convert now")
                 .setReplyMarkup(keyboardService.startKeyboard());
     }
 
@@ -53,10 +53,10 @@ public class AppService {
         var amountInt = Integer.parseInt(amount);
         var builder = new StringBuilder();
         builder
-                .append("Уважаемый "+user.getFirstname()+" "+user.getLastname()+"!")
+                .append("Dear "+user.getFirstname()+" "+user.getLastname()+"!")
                 .append("\n")
-                .append("Ваша сумма "+amount+" "+(user.getCurrencyFrom().getEmoji() == null ? user.getCurrencyFrom().getCurrency().toUpperCase() : user.getCurrencyFrom().getEmoji()))
-                .append(" составляет "+amountInt/user.getCurrencyTo().getValue()+" "+(user.getCurrencyTo().getEmoji() == null ? user.getCurrencyTo().getCurrency().toUpperCase() : user.getCurrencyTo().getEmoji()));
+                .append("Your amount "+amount+" "+(user.getCurrencyFrom().getEmoji() == null ? user.getCurrencyFrom().getCurrency().toUpperCase() : user.getCurrencyFrom().getEmoji()))
+                .append(" is "+amountInt/user.getCurrencyTo().getValue()+" "+(user.getCurrencyTo().getEmoji() == null ? user.getCurrencyTo().getCurrency().toUpperCase() : user.getCurrencyTo().getEmoji()));
         return new EditMessageText()
                 .setText(builder.toString())
                 .setReplyMarkup(keyboardService.startKeyboard());
@@ -65,13 +65,13 @@ public class AppService {
     public EditMessageText currencyConversion(User user) {
         user.setAction(INPUT_VALUE);
         return new EditMessageText()
-                .setText("Введите сумму")
+                .setText("Enter the amount ")
                 .setReplyMarkup(keyboardService.backKeyboard());
     }
 
     public SendMessage onFail() {
         return new SendMessage()
-                .setText("Начните работу с команды '"+START.getCommand()+"'")
+                .setText("Get started with a command '"+START.getCommand()+"'")
                 .setReplyMarkup(keyboardService.deleteMsg())
                 ;
     }

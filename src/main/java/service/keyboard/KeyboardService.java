@@ -26,10 +26,10 @@ public class KeyboardService {
 
     public InlineKeyboardMarkup startKeyboard() {
         var selectCurrency = new InlineKeyboardButton()
-                .setText("Выбрать валюту")
+                .setText("Select currency")
                 .setCallbackData(SELECT_CURRENCY.getCommand());
         var currencyConversion = new InlineKeyboardButton()
-                .setText("Конвертировать валюту")
+                .setText("Convert currency")
                 .setCallbackData(CURRENCY_CONVERSION.getCommand());
         var row1 = Arrays.asList(selectCurrency);
         var row2 = Arrays.asList(currencyConversion);
@@ -56,7 +56,7 @@ public class KeyboardService {
 
     private List<InlineKeyboardButton> backRow() {
         var back = new InlineKeyboardButton()
-                .setText("Главное меню")
+                .setText("Main menu")
                 .setCallbackData(BACK.getCommand());
         return Arrays.asList(back);
     }
@@ -67,7 +67,7 @@ public class KeyboardService {
 
     public InlineKeyboardMarkup deleteMsg() {
         var delete = new InlineKeyboardButton()
-                .setText("Удалить сообщение")
+                .setText("Delete message")
                 .setCallbackData(DELETE.getCommand());
         return new InlineKeyboardMarkup().setKeyboard(Arrays.asList(Arrays.asList(delete)));
 
