@@ -4,6 +4,7 @@ import common.ActionType;
 import common.CurrencyType;
 import common.RequestMapping;
 import common.User;
+import org.fluentd.logger.FluentLogger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
@@ -23,6 +24,8 @@ import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
 
+    private static final String TAG = "tgbot";
+    private static FluentLogger logger = FluentLogger.getLogger(TAG);
     private static final String TOKEN = "<TOKEN>";
     private static final String USERNAME = "<USERNAME>";
 
@@ -33,13 +36,15 @@ public class Bot extends TelegramLongPollingBot {
     private AppService appService = AppService.getInstance();
 
     public void onUpdateReceived(Update update) {
-       if(update.hasMessage())
-           msgHandler(update.getMessage());
-       if(update.hasCallbackQuery())
-           callbackHandler(update.getCallbackQuery());
+        logger.log(TAG, "info", "Update was received");
+        if(update.hasMessage())
+            msgHandler(update.getMessage());
+        if(update.hasCallbackQuery())
+            callbackHandler(update.getCallbackQuery());
     }
 
     private void callbackHandler(CallbackQuery callbackQuery) {
+        logger.log(TAG, "info", "Callback data was received");
         currentChatId = callbackQuery.getMessage().getChatId();
         msgId = callbackQuery.getMessage().getMessageId();
 
@@ -60,6 +65,7 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void msgHandler(Message message) {
+        logger.log(TAG, "info", "Message was received");
         currentChatId = message.getChatId();
         msgId = message.getMessageId();
         if(!users.containsKey(currentChatId))
@@ -87,6 +93,7 @@ public class Bot extends TelegramLongPollingBot {
             execute(new DeleteMessage().setChatId(currentChatId).setMessageId(msgId));
         } catch (TelegramApiException e) {
             e.printStackTrace();
+            logger.log(TAG, "exception", e);
         }
     }
 
@@ -95,8 +102,10 @@ public class Bot extends TelegramLongPollingBot {
         msg.setMessageId(users.get(currentChatId).getMsgId());
         try {
             execute(msg);
+            logger.log(TAG, "response", msg);
         } catch (TelegramApiException e) {
             e.printStackTrace();
+            logger.log(TAG, "exception", e);
         }
     }
 
@@ -104,8 +113,10 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.setChatId(currentChatId);
         try {
             execute(sendMessage);
+            logger.log(TAG, "response", sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
+            logger.log(TAG, "exception", e);
         }
     }
 

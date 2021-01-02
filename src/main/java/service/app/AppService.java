@@ -72,7 +72,6 @@ public class AppService {
     public SendMessage onFail() {
         return new SendMessage()
                 .setText("Get started with a command '"+START.getCommand()+"'")
-                .setReplyMarkup(keyboardService.deleteMsg())
-                ;
+                .setReplyMarkup(keyboardService.deleteMsg());
     }
 }
