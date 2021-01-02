@@ -2,6 +2,7 @@ package app;
 
 import org.fluentd.logger.FluentLogger;
 import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
@@ -13,7 +14,9 @@ public class Main {
         ApiContextInitializer.init();
         TelegramBotsApi bot = new TelegramBotsApi();
         try {
-            bot.registerBot(new Bot());
+            DefaultBotOptions options = new DefaultBotOptions();
+            options.setProxyPort(8081);
+            bot.registerBot(new Bot(options));
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }

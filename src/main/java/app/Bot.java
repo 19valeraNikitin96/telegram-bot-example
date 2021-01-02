@@ -5,6 +5,7 @@ import common.CurrencyType;
 import common.RequestMapping;
 import common.User;
 import org.fluentd.logger.FluentLogger;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
@@ -26,6 +27,13 @@ public class Bot extends TelegramLongPollingBot {
 
     private static final String TAG = "tgbot";
     private static FluentLogger logger = FluentLogger.getLogger(TAG);
+
+    public Bot() { }
+
+    public Bot(DefaultBotOptions options) {
+        super(options);
+    }
+
     private static final String TOKEN = "<TOKEN>";
     private static final String USERNAME = "<USERNAME>";
 
