@@ -26,7 +26,7 @@ import java.util.List;
 public class Bot extends TelegramLongPollingBot {
 
     private static final String TAG = "tgbot";
-    private static FluentLogger logger = FluentLogger.getLogger(TAG);
+    private static FluentLogger logger = FluentLogger.getLogger(TAG, "localhost", 8080);
 
     public Bot() { }
 
